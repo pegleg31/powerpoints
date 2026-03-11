@@ -3,20 +3,24 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
 
-# ── Bright Palette ────────────────────────────────────────────────────────────
-C_BG      = RGBColor(0xFF, 0xFF, 0xFF)   # white        – slide backgrounds
-C_BG2     = RGBColor(0xF4, 0xF6, 0xFF)  # soft lavender – panel backgrounds
-C_PURPLE  = RGBColor(0x6C, 0x35, 0xDE)  # vivid purple  – primary headers
-C_BLUE    = RGBColor(0x22, 0x8B, 0xE6)  # bright blue   – accents / subheaders
-C_TEAL    = RGBColor(0x00, 0xBF, 0xA5)  # teal green    – positive / correct
-C_GREEN   = RGBColor(0x00, 0xC8, 0x53)  # lime green    – can-do / allowed
-C_ORANGE  = RGBColor(0xFF, 0x6D, 0x00)  # vivid orange  – activities / warnings
-C_PINK    = RGBColor(0xE9, 0x1E, 0x8C)  # hot pink      – caution / wrong
-C_YELLOW  = RGBColor(0xFF, 0xD6, 0x00)  # bright yellow – quiz / emphasis
-C_DARK    = RGBColor(0x1A, 0x1A, 0x2E)  # near-black    – body text on light bg
-C_DGRAY   = RGBColor(0x44, 0x44, 0x66)  # dark grey     – secondary text
-C_LGRAY   = RGBColor(0xE8, 0xEC, 0xF8)  # light grey    – panel fills
+# ── Brand Palette ─────────────────────────────────────────────────────────────
+# Primary
+C_BG      = RGBColor(0xFF, 0xFF, 0xFF)   # white           – slide backgrounds
+C_BG2     = RGBColor(0xE6, 0xED, 0xF7)  # light blue tint – panel backgrounds
+C_PURPLE  = RGBColor(0x00, 0x24, 0x4E)  # Ink Blue        – primary headers
+C_BLUE    = RGBColor(0x00, 0x9D, 0xEA)  # Sky Blue        – accents / subheaders
+C_TEAL    = RGBColor(0x0A, 0x33, 0x70)  # Heritage Blue   – positive / correct
+C_GREEN   = RGBColor(0x00, 0x9D, 0xEA)  # Sky Blue        – can-do / allowed
+C_ORANGE  = RGBColor(0xE2, 0x8E, 0x03)  # Deep Yellow     – activities / warnings
+C_PINK    = RGBColor(0xE2, 0x8E, 0x03)  # Deep Yellow     – caution / wrong
+C_YELLOW  = RGBColor(0xFD, 0xB9, 0x13)  # Golden Yellow   – quiz / emphasis
+C_DARK    = RGBColor(0x00, 0x24, 0x4E)  # Ink Blue        – body text on light bg
+C_DGRAY   = RGBColor(0x0A, 0x33, 0x70)  # Heritage Blue   – secondary text
+C_LGRAY   = RGBColor(0xF0, 0xF4, 0xFA)  # soft blue-grey  – panel fills
 C_WHITE   = RGBColor(0xFF, 0xFF, 0xFF)
+
+# Font
+BRAND_FONT = "Franklin Gothic Medium Cond"
 
 prs = Presentation()
 prs.slide_width  = Inches(13.33)
@@ -46,6 +50,7 @@ def txb(sl, text, x, y, w, h,
     p.alignment = align
     run = p.add_run()
     run.text = text
+    run.font.name   = BRAND_FONT
     run.font.size   = Pt(size)
     run.font.bold   = bold
     run.font.color.rgb = color
@@ -121,6 +126,7 @@ def bullet_slide(title, bullets, subtitle=None,
         run = p.add_run()
         run.text = f"{icon}  {b}" if icon else b
         run.font.size      = Pt(size)
+        run.font.name = BRAND_FONT
         run.font.color.rgb = bullet_color
     return sl
 
@@ -143,7 +149,7 @@ def two_col_slide(title, left_title, left_items,
         else: p = tf_l.add_paragraph()
         p.space_before = Pt(8)
         run = p.add_run(); run.text = f"▸  {item}"
-        run.font.size = Pt(19); run.font.color.rgb = C_WHITE
+        run.font.name = BRAND_FONT; run.font.size = Pt(19); run.font.color.rgb = C_WHITE
     # right panel
     rect(sl, 6.88, 1.55, 6.15, 5.65, right_col)
     txb(sl, right_title, 7.08, 1.65, 5.75, 0.72,
@@ -156,7 +162,7 @@ def two_col_slide(title, left_title, left_items,
         else: p = tf_r.add_paragraph()
         p.space_before = Pt(8)
         run = p.add_run(); run.text = f"▸  {item}"
-        run.font.size = Pt(19); run.font.color.rgb = C_WHITE
+        run.font.name = BRAND_FONT; run.font.size = Pt(19); run.font.color.rgb = C_WHITE
     return sl
 
 
@@ -177,6 +183,7 @@ def activity_slide(title, instructions, time_str="5 min", color=C_ORANGE):
         p.space_before = Pt(9)
         run = p.add_run(); run.text = line
         run.font.size = Pt(21)
+        run.font.name = BRAND_FONT
         if line.startswith("→"):
             run.font.color.rgb = C_PURPLE; run.font.bold = True
         else:
@@ -196,7 +203,7 @@ def example_slide(title, prompt_text, output_text, subtitle=None, accent=C_PURPL
     tf_p  = box_p.text_frame; tf_p.word_wrap = True
     run = tf_p.paragraphs[0].add_run()
     run.text = prompt_text
-    run.font.size = Pt(19); run.font.color.rgb = C_PURPLE; run.font.italic = True
+    run.font.name = BRAND_FONT; run.font.size = Pt(19); run.font.color.rgb = C_PURPLE; run.font.italic = True
     # output label strip
     rect(sl, 0.3, 4.12, 12.73, 0.42, C_TEAL)
     txb(sl, "AI OUTPUT", 0.5, 4.15, 5, 0.36,
@@ -263,6 +270,7 @@ for line in instructions:
     p.space_before = Pt(6)
     run = p.add_run(); run.text = line
     run.font.size = Pt(20)
+    run.font.name = BRAND_FONT
     if line.startswith("   "):
         run.font.color.rgb = C_PURPLE; run.font.bold = True
     elif line.startswith("Categories"):
@@ -311,6 +319,7 @@ for line in debrief:
     p.space_before = Pt(9)
     run = p.add_run(); run.text = line
     run.font.size = Pt(21)
+    run.font.name = BRAND_FONT
     if line.startswith("→"):
         run.font.color.rgb = C_PURPLE; run.font.bold = True
     elif line.startswith("Key"):
@@ -350,7 +359,7 @@ for i, (title, col, desc) in enumerate(concepts):
         Inches(bx + 0.15), Inches(by + 1.2), Inches(3.8), Inches(4.1))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(18); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(18); run.font.color.rgb = C_WHITE
 
 txb(sl, "🔍  Analogy: AI is like very well-read autocomplete — not a search engine, not a brain.",
     0.3, 7.05, 12.7, 0.42, size=15, color=C_BLUE, italic=True)
@@ -417,7 +426,7 @@ for i, (title, col, desc) in enumerate(reasons):
         Inches(bx + 0.2), Inches(by + 0.85), Inches(5.8), Inches(1.65))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
 
 # Hallucination example
 example_slide(
@@ -602,7 +611,7 @@ for i, (num, title, desc) in enumerate(steps):
         Inches(bx + 0.12), Inches(by + 1.68), Inches(2.8), Inches(2.9))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
 
 example_slide(
     "Strategy 2 — Scaffolded Prompting Example",
@@ -660,7 +669,7 @@ for i, (fmt, desc) in enumerate(formats):
         Inches(bx + 0.15), Inches(by + 0.78), Inches(3.8), Inches(1.72))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(15); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(15); run.font.color.rgb = C_WHITE
 
 example_slide(
     "Strategy 3 — Format-Based Output Example",
@@ -724,7 +733,7 @@ for i, (title, col, desc) in enumerate(techniques):
         Inches(bx + 0.2), Inches(by + 0.8), Inches(5.8), Inches(1.68))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
 
 example_slide(
     "Strategy 4 — Revision Example",
@@ -801,7 +810,7 @@ for idx, (r_title, r_desc) in enumerate(reasons_t):
     box = sl.shapes.add_textbox(Inches(5.6), Inches(by + 0.1), Inches(7.2), Inches(0.84))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = r_desc; run.font.size = Pt(16); run.font.color.rgb = C_WHITE
+    run.text = r_desc; run.font.name = BRAND_FONT; run.font.size = Pt(16); run.font.color.rgb = C_WHITE
     by += 1.1
 
 # Evaluation checklist
@@ -825,7 +834,7 @@ for i, (item, col, desc) in enumerate(checklist):
     box = sl.shapes.add_textbox(Inches(5.1), Inches(by + 0.14), Inches(7.8), Inches(0.65))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = desc; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
+    run.text = desc; run.font.name = BRAND_FONT; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
 
 # Practice — spot the errors
 sl = add_slide()
@@ -845,7 +854,7 @@ error_text = (
 box = sl.shapes.add_textbox(Inches(0.5), Inches(2.18), Inches(12.3), Inches(3.35))
 tf = box.text_frame; tf.word_wrap = True
 run = tf.paragraphs[0].add_run()
-run.text = error_text; run.font.size = Pt(20); run.font.color.rgb = C_DARK; run.font.italic = True
+run.text = error_text; run.font.name = BRAND_FONT; run.font.size = Pt(20); run.font.color.rgb = C_DARK; run.font.italic = True
 
 rect(sl, 0.3, 5.85, 12.73, 1.42, C_ORANGE)
 txb(sl, "❓  Errors to find — discuss with a partner, then reveal!",
@@ -928,7 +937,7 @@ for i, (heading, col, items) in enumerate(privacy_items):
         else: p = tf.add_paragraph()
         p.space_before = Pt(9)
         run = p.add_run(); run.text = f"▸  {item}"
-        run.font.size = Pt(18); run.font.color.rgb = C_WHITE
+        run.font.name = BRAND_FONT; run.font.size = Pt(18); run.font.color.rgb = C_WHITE
 
 two_col_slide(
     "Ethical Use: Learning vs. Shortcuts",
@@ -1043,7 +1052,7 @@ for idx, (emoji, title, question) in enumerate(reflections):
     box = sl.shapes.add_textbox(Inches(4.6), Inches(by + 0.12), Inches(8.1), Inches(0.78))
     tf = box.text_frame; tf.word_wrap = True
     run = tf.paragraphs[0].add_run()
-    run.text = question; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
+    run.text = question; run.font.name = BRAND_FONT; run.font.size = Pt(17); run.font.color.rgb = C_WHITE
     by += 1.08
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -1085,6 +1094,7 @@ for line in resources:
     p.space_before = Pt(5)
     run = p.add_run(); run.text = line
     run.font.size = Pt(16)
+    run.font.name = BRAND_FONT
     if line.startswith("📋") or line.startswith("📚"):
         run.font.color.rgb = C_YELLOW; run.font.bold = True
     elif line.startswith("     '"):
