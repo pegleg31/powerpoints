@@ -8,17 +8,16 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --ink-blue:    #00244e;
-      --gold:        #fdb913;
-      --heritage:    #0a3370;
-      --sky:         #009dea;
-      --deep-yellow: #e28e03;
-      --soft-yellow: #ffd04d;
-      --impact:      #00559a;
-      --soft-blue:   #e6f0f7;
-      --parchment:   #f4f0ec;
-      --white:       #ffffff;
-      --warm-black:  #1d1c18;
+      --ink:   #00244e;
+      --gold:  #fdb913;
+      --her:   #0a3370;
+      --sky:   #009dea;
+      --dyel:  #e28e03;
+      --syel:  #ffd04d;
+      --imp:   #00559a;
+      --sblu:  #e6f0f7;
+      --parch: #f4f0ec;
+      --white: #ffffff;
     }
 
     html, body {
@@ -28,19 +27,22 @@
       font-family: 'Segoe UI', Calibri, 'Trebuchet MS', Arial, sans-serif;
     }
 
-    /* ─── SLIDE SHELL ────────────────────────────────────────────── */
     .slide {
       width: 1920px;
       height: 1080px;
-      background-color: var(--ink-blue);
-      background-image: radial-gradient(circle, rgba(253,185,19,0.06) 1px, transparent 1px);
-      background-size: 32px 32px;
+      background-color: var(--ink);
+      /* Subtle dot grid + a warm radial glow centered on the road */
+      background-image:
+        radial-gradient(ellipse 1000px 360px at 50% 56%, rgba(0,85,154,0.22) 0%, transparent 70%),
+        radial-gradient(circle, rgba(253,185,19,0.055) 1px, transparent 1px);
+      background-size: auto, 32px 32px;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    /* ─── HEADER ─────────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
     .header {
       flex: 0 0 auto;
       display: flex;
@@ -48,276 +50,309 @@
       border-bottom: 5px solid var(--gold);
     }
 
-    .header-left {
+    .hdr-main {
       flex: 1;
-      padding: 38px 56px 32px;
+      padding: 28px 56px 24px;
       position: relative;
     }
 
     .eyebrow {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 4.5px;
+      letter-spacing: 5px;
       text-transform: uppercase;
       color: var(--gold);
-      opacity: 0.85;
-      margin-bottom: 10px;
+      opacity: 0.8;
+      margin-bottom: 8px;
     }
 
-    .title-line1 {
-      font-size: 46px;
+    .h-line1 {
+      font-size: 36px;
       font-weight: 300;
       color: var(--white);
       line-height: 1;
-      letter-spacing: -0.5px;
     }
 
-    .title-line2 {
-      font-size: 60px;
+    .h-line2 {
+      font-size: 50px;
       font-weight: 800;
       color: var(--gold);
       line-height: 1.05;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
-    /* Decorative fading circles */
+    /* Decorative fading circles in header */
     .hdr-deco {
       position: absolute;
       right: 36px;
-      bottom: 18px;
+      bottom: 12px;
       display: flex;
       align-items: flex-end;
       gap: 10px;
     }
-    .hdr-deco .c {
-      border-radius: 50%;
-      background: var(--gold);
-    }
-    .hdr-deco .c1 { width: 88px; height: 88px; opacity: 0.08; }
-    .hdr-deco .c2 { width: 54px; height: 54px; opacity: 0.12; }
-    .hdr-deco .c3 { width: 30px; height: 30px; opacity: 0.18; }
+    .hdr-deco .c { border-radius: 50%; background: var(--gold); }
+    .hdr-deco .c1 { width: 70px; height: 70px; opacity: 0.08; }
+    .hdr-deco .c2 { width: 44px; height: 44px; opacity: 0.13; }
+    .hdr-deco .c3 { width: 24px; height: 24px; opacity: 0.2; }
 
-    .header-sep {
-      flex: 0 0 5px;
-      background: var(--gold);
-    }
+    .hdr-sep { flex: 0 0 5px; background: var(--gold); }
 
-    .header-right {
-      flex: 0 0 680px;
-      background: var(--heritage);
-      padding: 38px 52px 32px 48px;
+    .hdr-desc {
+      flex: 0 0 660px;
+      background: var(--her);
+      padding: 28px 52px 24px 46px;
       display: flex;
       align-items: center;
     }
-
-    .header-right p {
-      font-size: 15.5px;
+    .hdr-desc p {
+      font-size: 14.5px;
       line-height: 1.75;
-      color: var(--soft-blue);
+      color: var(--sblu);
     }
 
-    /* ─── CONTENT AREA (fills remaining height) ─────────────────── */
-    .content {
+    /* ═══════════════════════════════════════════
+       ROAD ZONE  (fills all remaining height)
+    ═══════════════════════════════════════════ */
+    .road-zone {
       flex: 1;
       display: flex;
       flex-direction: column;
+      padding: 16px 52px 0;
       min-height: 0;
     }
 
-    /* ─── PILLARS GRID ───────────────────────────────────────────── */
-    .pillars {
+    /* ── Pillar rows ── */
+    .p-row {
       flex: 1;
-      padding: 26px 52px 16px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 20px;
+      display: flex;
       min-height: 0;
     }
 
-    .card {
-      background: var(--heritage);
+    /* 6 equal columns; odd-indexed are "active" in top row, even-indexed in bottom row */
+    .p-cell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top row: cards flush to bottom (nearest the road) */
+    .top-row .p-cell { justify-content: flex-end; }
+    /* Bottom row: cards flush to top (nearest the road) */
+    .bottom-row .p-cell { justify-content: flex-start; }
+
+    /* ── Pillar card ── */
+    .p-card {
+      margin: 0 10px;
+      padding: 18px 20px 16px;
+      background: linear-gradient(145deg, #0a3370 0%, #00244e 100%);
       border-radius: 10px;
-      border-top: 5px solid var(--gold);
-      padding: 24px 28px 20px;
-      position: relative;
-      overflow: hidden;
+      border-top: 4px solid var(--gold);
+      box-shadow:
+        0 6px 32px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(253,185,19,0.14),
+        inset 0 1px 0 rgba(253,185,19,0.08);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Large watermark numeral */
-    .card::before {
-      content: attr(data-n);
-      position: absolute;
-      bottom: -22px;
-      right: 8px;
-      font-size: 140px;
-      font-weight: 900;
-      color: rgba(0, 20, 60, 0.75);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Corner gradient accent */
-    .card::after {
+    /* Corner glow accent */
+    .p-card::after {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(225deg, rgba(253,185,19,0.13) 0%, transparent 65%);
+      top: 0; right: 0;
+      width: 64px; height: 64px;
+      background: linear-gradient(225deg, rgba(253,185,19,0.12) 0%, transparent 65%);
       border-radius: 0 10px 0 0;
     }
 
-    .card-header {
+    .card-top {
       display: flex;
       align-items: center;
-      margin-bottom: 11px;
-      position: relative;
-      z-index: 1;
+      gap: 12px;
+      margin-bottom: 10px;
     }
 
     .badge {
       flex: 0 0 40px;
       height: 40px;
       background: var(--gold);
-      color: var(--ink-blue);
-      font-size: 17px;
+      color: var(--ink);
+      font-size: 16px;
       font-weight: 800;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 8px rgba(253,185,19,0.4);
+      position: relative;
+      z-index: 1;
     }
 
-    .card-icon {
-      width: 36px;
-      height: 36px;
+    .p-icon {
+      width: 30px;
+      height: 30px;
       color: var(--gold);
-      opacity: 0.42;
+      opacity: 0.38;
       margin-left: auto;
+      position: relative;
+      z-index: 1;
     }
 
-    .card-title {
-      font-size: 17.5px;
+    .p-title {
+      font-size: 16px;
       font-weight: 700;
       color: var(--gold);
       line-height: 1.2;
+      margin-bottom: 8px;
       position: relative;
       z-index: 1;
-      margin-bottom: 9px;
     }
 
-    .card-title::after {
+    .p-title::after {
       content: '';
       display: block;
-      width: 30px;
+      width: 28px;
       height: 2.5px;
-      background: var(--deep-yellow);
+      background: var(--dyel);
       border-radius: 2px;
-      margin-top: 7px;
+      margin-top: 6px;
     }
 
-    .card-desc {
-      font-size: 14px;
+    .p-desc {
+      font-size: 13.5px;
       line-height: 1.7;
-      color: var(--soft-blue);
+      color: var(--sblu);
+      flex: 1;
       position: relative;
       z-index: 1;
-      flex: 1;
     }
 
-    /* ─── ROADMAP TRACK ──────────────────────────────────────────── */
-    .roadmap-track {
-      flex: 0 0 46px;
-      padding: 0 52px;
+    /* ── Connector stems ── */
+    .c-row {
+      flex: 0 0 26px;
+      display: flex;
+    }
+
+    .c-col {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .c-col.on::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold) 0%, var(--dyel) 100%);
+      border-radius: 2px;
+    }
+
+    /* ── Road band ── */
+    .road {
+      flex: 0 0 82px;
+      position: relative;
+      z-index: 1;           /* sits above connector rows */
       display: flex;
       align-items: center;
-      gap: 0;
-      position: relative;
+      /* Bright golden gradient: lighter top-center, deeper edges */
+      background:
+        linear-gradient(180deg,
+          var(--syel) 0%,
+          var(--gold) 22%,
+          var(--gold) 78%,
+          var(--dyel) 100%);
+      box-shadow:
+        0 -5px 18px rgba(253,185,19,0.30),   /* upward glow */
+        0  6px 28px rgba(0,0,0,0.55),         /* downward shadow */
+        0  3px 12px rgba(253,185,19,0.22);    /* subtle lower glow */
     }
 
-    .track-label {
+    /* Edge stripes */
+    .road::before {
+      content: '';
       position: absolute;
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.5;
+      inset: 0;
+      border-top:    3.5px solid rgba(0,36,78,0.55);
+      border-bottom: 3.5px solid rgba(0,36,78,0.55);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .track-node {
-      flex: 0 0 26px;
-      height: 26px;
-      background: var(--gold);
+    /* Centre dashes */
+    .road::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 3px;
+      transform: translateY(-50%);
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.72) 0, rgba(255,255,255,0.72) 24px,
+        transparent 24px, transparent 48px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Road stops (1–6) ── */
+    .road-stops {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .r-stop {
+      flex: 0 0 56px;
+      height: 56px;
+      background: var(--ink);
       border-radius: 50%;
-      color: var(--ink-blue);
-      font-size: 10px;
+      border: 3.5px solid var(--gold);
+      color: var(--gold);
+      font-size: 19px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1;
+      /* Glow ring */
+      box-shadow:
+        0 0 0 4px rgba(253,185,19,0.18),
+        0 0 18px rgba(253,185,19,0.45),
+        0 3px 10px rgba(0,0,0,0.5);
     }
 
-    .track-node.dim {
-      background: transparent;
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      opacity: 0.5;
-    }
-
-    .track-line {
-      flex: 1;
-      height: 2px;
-      background: linear-gradient(90deg, var(--gold) 0%, rgba(253,185,19,0.35) 100%);
-    }
-
-    .track-arrow {
-      flex: 0 0 12px;
-      height: 12px;
-      color: var(--gold);
-      opacity: 0.5;
-    }
-
-    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
     .footer {
       flex: 0 0 auto;
-      padding: 0 52px 26px;
+      padding: 10px 52px 22px;
     }
 
-    .footer-inner {
-      background: var(--parchment);
-      border-radius: 8px;
-      padding: 17px 32px;
+    .footer-bar {
+      background: var(--parch);
+      border-radius: 7px;
+      padding: 14px 28px;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
       border-left: 7px solid var(--gold);
     }
 
-    .footer-icon {
-      flex: 0 0 26px;
-    }
+    .f-icon { flex: 0 0 22px; }
 
-    .footer-text {
-      font-size: 13.5px;
-      line-height: 1.65;
-      color: var(--ink-blue);
+    .f-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
       font-style: italic;
     }
-
-    .footer-text strong {
-      font-style: normal;
-      font-weight: 700;
-    }
+    .f-text strong { font-style: normal; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -325,154 +360,190 @@
 
   <!-- ═══ HEADER ═══ -->
   <header class="header">
-    <div class="header-left">
+    <div class="hdr-main">
       <p class="eyebrow">Southern New Hampshire University &nbsp;·&nbsp; AI Literacy Framework</p>
-      <div class="title-line1">The Six Pillars of</div>
-      <div class="title-line2">AI Literacy</div>
+      <div class="h-line1">The Six Pillars of</div>
+      <div class="h-line2">AI Literacy</div>
       <div class="hdr-deco">
-        <div class="c c1"></div>
-        <div class="c c2"></div>
-        <div class="c c3"></div>
+        <div class="c c1"></div><div class="c c2"></div><div class="c c3"></div>
       </div>
     </div>
-    <div class="header-sep"></div>
-    <div class="header-right">
+    <div class="hdr-sep"></div>
+    <div class="hdr-desc">
       <p>SNHU's AI Literacy Framework is built upon six foundational pillars that guide ethical, effective,
         and responsible use of artificial intelligence across our community. Each pillar represents a key
         competency and value that supports our vision for AI literacy.</p>
     </div>
   </header>
 
-  <div class="content">
+  <!-- ═══ ROAD ZONE ═══ -->
+  <div class="road-zone">
 
-    <!-- ═══ PILLARS GRID ═══ -->
-    <section class="pillars">
+    <!-- TOP ROW — pillars 1, 3, 5 (odd columns active) -->
+    <div class="p-row top-row">
 
-      <!-- 1 · Purposeful Use -->
-      <div class="card" data-n="1">
-        <div class="card-header">
-          <div class="badge">1</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <circle cx="12" cy="12" r="3"/>
-            <line x1="12" y1="2" x2="12" y2="5"/>
-            <line x1="12" y1="19" x2="12" y2="22"/>
-            <line x1="2" y1="12" x2="5" y2="12"/>
-            <line x1="19" y1="12" x2="22" y2="12"/>
-          </svg>
+      <div class="p-cell"><!-- Pillar 1 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">1</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+              <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Purposeful Use</h2>
+          <p class="p-desc">Determine when AI is appropriate, what role it should play, and when it should not be used.</p>
         </div>
-        <h2 class="card-title">Purposeful Use</h2>
-        <p class="card-desc">Determine when AI is appropriate, what role it should play, and when it should not be used.</p>
       </div>
 
-      <!-- 2 · Safe and Compliant Use -->
-      <div class="card" data-n="2">
-        <div class="card-header">
-          <div class="badge">2</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <polyline points="9 12 11 14 15 10"/>
-          </svg>
+      <div class="p-cell"></div><!-- empty col 2 -->
+
+      <div class="p-cell"><!-- Pillar 3 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">3</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+              <line x1="11" y1="8" x2="11" y2="14"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Critical Evaluation</h2>
+          <p class="p-desc">Assess AI outputs for accuracy, bias, completeness, and reliability.</p>
         </div>
-        <h2 class="card-title">Safe and Compliant Use</h2>
-        <p class="card-desc">Protect institutional and personal data, use approved tools, and follow policy-based requirements.</p>
       </div>
 
-      <!-- 3 · Critical Evaluation -->
-      <div class="card" data-n="3">
-        <div class="card-header">
-          <div class="badge">3</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            <line x1="8" y1="11" x2="14" y2="11"/>
-            <line x1="11" y1="8" x2="11" y2="14"/>
-          </svg>
+      <div class="p-cell"></div><!-- empty col 4 -->
+
+      <div class="p-cell"><!-- Pillar 5 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">5</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Human Oversight &amp; Responsibility</h2>
+          <p class="p-desc">Maintain human accountability for decisions and outcomes.</p>
         </div>
-        <h2 class="card-title">Critical Evaluation</h2>
-        <p class="card-desc">Assess AI outputs for accuracy, bias, completeness, and reliability.</p>
       </div>
 
-      <!-- 4 · Transparency and Attribution -->
-      <div class="card" data-n="4">
-        <div class="card-header">
-          <div class="badge">4</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-        </div>
-        <h2 class="card-title">Transparency and Attribution</h2>
-        <p class="card-desc">Acknowledge meaningful AI assistance clearly and appropriately.</p>
-      </div>
+      <div class="p-cell"></div><!-- empty col 6 -->
 
-      <!-- 5 · Human Oversight and Responsibility -->
-      <div class="card" data-n="5">
-        <div class="card-header">
-          <div class="badge">5</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <h2 class="card-title">Human Oversight &amp; Responsibility</h2>
-        <p class="card-desc">Maintain human accountability for decisions and outcomes.</p>
-      </div>
+    </div><!-- .top-row -->
 
-      <!-- 6 · Growth and Adaptation -->
-      <div class="card" data-n="6">
-        <div class="card-header">
-          <div class="badge">6</div>
-          <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-            <polyline points="17 6 23 6 23 12"/>
-          </svg>
-        </div>
-        <h2 class="card-title">Growth and Adaptation</h2>
-        <p class="card-desc">Build transferable skills that evolve as tools and expectations change.</p>
-      </div>
-
-    </section>
-
-    <!-- ═══ ROADMAP TRACK ═══ -->
-    <div class="roadmap-track">
-      <span class="track-label">AI Literacy Journey</span>
-      <div class="track-node">1</div>
-      <div class="track-line"></div>
-      <div class="track-node">2</div>
-      <div class="track-line"></div>
-      <div class="track-node">3</div>
-      <div class="track-line"></div>
-      <div class="track-node">4</div>
-      <div class="track-line"></div>
-      <div class="track-node">5</div>
-      <div class="track-line"></div>
-      <div class="track-node">6</div>
+    <!-- TOP CONNECTORS -->
+    <div class="c-row">
+      <div class="c-col on"></div><!-- col 1 active -->
+      <div class="c-col"></div>
+      <div class="c-col on"></div><!-- col 3 active -->
+      <div class="c-col"></div>
+      <div class="c-col on"></div><!-- col 5 active -->
+      <div class="c-col"></div>
     </div>
 
-    <!-- ═══ FOOTER ═══ -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="#fdb913">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
-        <p class="footer-text">
-          These pillars remain constant throughout the journey to AI literacy, providing a structured foundation
-          for <strong>learning</strong>, <strong>practicing</strong>, and
-          <strong>sustaining responsible AI use at SNHU</strong>.
-        </p>
+    <!-- ═══ THE ROAD ═══ -->
+    <div class="road">
+      <div class="road-stops">
+        <div class="r-stop">1</div>
+        <div class="r-stop">2</div>
+        <div class="r-stop">3</div>
+        <div class="r-stop">4</div>
+        <div class="r-stop">5</div>
+        <div class="r-stop">6</div>
       </div>
-    </footer>
+    </div>
 
-  </div><!-- .content -->
-</div><!-- .slide -->
+    <!-- BOTTOM CONNECTORS -->
+    <div class="c-row">
+      <div class="c-col"></div>
+      <div class="c-col on"></div><!-- col 2 active -->
+      <div class="c-col"></div>
+      <div class="c-col on"></div><!-- col 4 active -->
+      <div class="c-col"></div>
+      <div class="c-col on"></div><!-- col 6 active -->
+    </div>
+
+    <!-- BOTTOM ROW — pillars 2, 4, 6 (even columns active) -->
+    <div class="p-row bottom-row">
+
+      <div class="p-cell"></div><!-- empty col 1 -->
+
+      <div class="p-cell"><!-- Pillar 2 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">2</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Safe and Compliant Use</h2>
+          <p class="p-desc">Protect institutional and personal data, use approved tools, and follow policy-based requirements.</p>
+        </div>
+      </div>
+
+      <div class="p-cell"></div><!-- empty col 3 -->
+
+      <div class="p-cell"><!-- Pillar 4 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">4</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Transparency and Attribution</h2>
+          <p class="p-desc">Acknowledge meaningful AI assistance clearly and appropriately.</p>
+        </div>
+      </div>
+
+      <div class="p-cell"></div><!-- empty col 5 -->
+
+      <div class="p-cell"><!-- Pillar 6 -->
+        <div class="p-card">
+          <div class="card-top">
+            <div class="badge">6</div>
+            <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h2 class="p-title">Growth and Adaptation</h2>
+          <p class="p-desc">Build transferable skills that evolve as tools and expectations change.</p>
+        </div>
+      </div>
+
+    </div><!-- .bottom-row -->
+
+  </div><!-- .road-zone -->
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-bar">
+      <svg class="f-icon" viewBox="0 0 24 24" fill="#fdb913">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <p class="f-text">
+        These pillars remain constant throughout the journey to AI literacy, providing a structured foundation
+        for <strong>learning</strong>, <strong>practicing</strong>, and
+        <strong>sustaining responsible AI use at SNHU</strong>.
+      </p>
+    </div>
+  </footer>
+
+</div>
 </body>
 </html>
